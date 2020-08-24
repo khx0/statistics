@@ -64,7 +64,7 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
 
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['pdf.fonttype'] = 42
-    
+
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     mpl.rcParams['text.latex.preamble'] = \
@@ -115,19 +115,16 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
     ax1.yaxis.labelpad = 3.0
     ######################################################################################
 
-#     ax1.plot([-1.0, 20.0], [0.0, 0.0],
-#              dashes = [4.0, 2.0],
-#              color = '#CCCCCC',
-#              lw = 1.0,
-#              zorder = 1)
-
-#     ax1.plot(X[:, 0], X[:, 1],
-#              alpha = 1.0,
-#              color = pColors[0],
-#              lw = 0.5,
-#              label = 'analytical data',
-#              clip_on = True,
-#              zorder = 1)
+    xmin, xmax = xFormat[0], xFormat[1]
+    xVals = np.linspace(1.05 * xmin, 1.05 * xmax, 500)
+    yVals = 1.0 * xVals
+    
+    ax1.plot(xVals, yVals,
+             alpha = 1.0,
+             color = pColors[0],
+             lw = 0.5,
+             clip_on = True,
+             zorder = 1)
 
     ax1.scatter(X[:, 0], X[:, 1],
                 s = 15,
@@ -136,13 +133,6 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
                 edgecolor = pColors[0],
                 zorder = 2,
                 label = r'sampled data')
-
-    # legend
-#     leg = ax1.legend(handlelength = 1.5,
-#                      scatterpoints = 1,
-#                      markerscale = 1.0,
-#                      ncol = 1)
-#     leg.draw_frame(False)
 
     ######################################################################################
     # set plot range and scale
