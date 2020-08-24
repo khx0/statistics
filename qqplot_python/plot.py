@@ -64,17 +64,19 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
 
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['pdf.fonttype'] = 42
+    
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 4.0,
-                       lFrac = 0.17, rFrac = 0.95, bFrac = 0.20, tFrac = 0.95)
+                       lFrac = 0.15, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.92)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -104,13 +106,13 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    plt.title(titlestr, fontsize = 7.0, y = 0.975)
     ax1.set_xlabel(r'theoretical quantiles',
                    fontsize = 7.0)
     ax1.set_ylabel(r'sample quantiles',
                    fontsize = 7.0)
-    ax1.xaxis.labelpad = 5.0
-    ax1.yaxis.labelpad = 5.0
+    ax1.xaxis.labelpad = 3.0
+    ax1.yaxis.labelpad = 3.0
     ######################################################################################
 
 #     ax1.plot([-1.0, 20.0], [0.0, 0.0],
@@ -200,8 +202,8 @@ if __name__ == '__main__':
     X = np.load(os.path.join(RAWDIR, filename))    
     print(X.shape)
     
-    xFormat = (-2.9, 2.9, -2.0, 2.1, 1.0, 0.5)
-    yFormat = (-2.9, 2.9, -2.0, 2.1, 1.0, 0.5)
+    xFormat = (-2.9, 2.9, -3.0, 2.51, 1.0, 0.5)
+    yFormat = (-2.9, 2.9, -3.0, 2.51, 1.0, 0.5)
 
     # plot data
     Plot(X = X,
@@ -209,4 +211,5 @@ if __name__ == '__main__':
          outdir = OUTDIR,
          pColors = ['k'],
          xFormat = xFormat,
-         yFormat = yFormat)
+         yFormat = yFormat,
+         titlestr = f'qq-plot for $n={len(X)}$')
