@@ -23,21 +23,25 @@ os.makedirs(RAWDIR, exist_ok = True)
 
 if __name__ == '__main__':
 
-    # create 10 samples from the standard normal distribution
-    n_samples = 100
-    X = np.random.randn(n_samples)
-
-    X_sorted = np.sort(X)
+    # create samples from the standard normal distribution
+    samples_list = [10, 20, 50, 100, 500, 1000]
+    
+    for n_samples in samples_list:
         
-    x_support = (np.arange(1, n_samples + 1, 1) - 0.5) / float(n_samples)
-    assert x_support.shape == X_sorted.shape, "Shape assertion failed."
+        np.random.seed(123456789)
+        X = np.random.randn(n_samples)
+
+        X_sorted = np.sort(X)
+        
+        x_support = (np.arange(1, n_samples + 1, 1) - 0.5) / float(n_samples)
+        assert x_support.shape == X_sorted.shape, "Shape assertion failed."
     
-    q_values = stats.norm.ppf(x_support)
-    assert q_values.shape == x_support.shape, "Shape assertion failed."
+        q_values = stats.norm.ppf(x_support)
+        assert q_values.shape == x_support.shape, "Shape assertion failed."
     
-    res = np.zeros((n_samples, 2))
-    res[:, 0] = q_values
-    res[:, 1] = X_sorted
+        res = np.zeros((n_samples, 2))
+        res[:, 0] = q_values
+        res[:, 1] = X_sorted
     
-    outname = f'qqplot_data_normal_dist_n_{n_samples}.npy'
-    np.save(os.path.join(RAWDIR, outname), res)
+        outname = f'qqplot_data_normal_dist_n_{n_samples}.npy'
+        np.save(os.path.join(RAWDIR, outname), res)

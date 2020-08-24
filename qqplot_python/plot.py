@@ -111,8 +111,8 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
                    fontsize = 7.0)
     ax1.set_ylabel(r'sample quantiles',
                    fontsize = 7.0)
-    ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 3.0
+    ax1.xaxis.labelpad = 2.5
+    ax1.yaxis.labelpad = 2.5
     ######################################################################################
 
     xmin, xmax = xFormat[0], xFormat[1]
@@ -182,24 +182,29 @@ def Plot(X, outname, outdir, pColors, xFormat, yFormat, titlestr = '',
 
 if __name__ == '__main__':
 
-    outname = 'qqplot_example_plot'
-    outname += '_Python_' + platform.python_version() + \
+    samples_list = [10, 20, 50, 100, 500, 1000]
+
+    for n_samples in samples_list:
+
+        outname = 'qqplot_example_plot'
+        outname += f'n_{n_samples}'
+        outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
-
-    filename = r'qqplot_data_normal_dist_n_100.npy'
-
-    # load data
-    X = np.load(os.path.join(RAWDIR, filename))    
-    print(X.shape)
     
-    xFormat = (-2.9, 2.9, -3.0, 2.51, 1.0, 0.5)
-    yFormat = (-2.9, 2.9, -3.0, 2.51, 1.0, 0.5)
+        filename = f'qqplot_data_normal_dist_n_{n_samples}.npy'
 
-    # plot data
-    Plot(X = X,
-         outname = outname,
-         outdir = OUTDIR,
-         pColors = ['k'],
-         xFormat = xFormat,
-         yFormat = yFormat,
-         titlestr = f'qq-plot for $n={len(X)}$')
+        # load data
+        X = np.load(os.path.join(RAWDIR, filename))    
+        print(X.shape)
+    
+        xFormat = (-2.9, 2.9, -3.0, 2.51, 1.0, 0.5)
+        yFormat = (-2.9, 2.9, -3.0, 2.51, 1.0, 0.5)
+
+        # plot data
+        Plot(X = X,
+            outname = outname,
+            outdir = OUTDIR,
+            pColors = ['k'],
+            xFormat = xFormat,
+            yFormat = yFormat,
+            titlestr = f'qq-plot for $n={len(X)}$')
